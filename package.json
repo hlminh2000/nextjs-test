@@ -1,0 +1,19 @@
+{
+  "name": "create-next-example-app",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "build": "next build",
+    "start": "NODE_ENV=production node index.js"
+  },
+  "dependencies": {
+    "apollo-server-express": "^2.4.5",
+    "express": "^4.16.4",
+    "graphql": "^14.1.1",
+    "next": "^8.0.1",
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  }
+}
