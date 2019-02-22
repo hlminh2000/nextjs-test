@@ -1,27 +1,37 @@
-const express = require("express");
-const router = express.Router();
 const { ApolloServer, gql } = require("apollo-server-express");
+
+const state = {
+  num: 1
+};
 
 // The GraphQL schema
 const typeDefs = gql`
   type Query {
     "A simple type for getting started!"
-    hello: String
+    num: Int
+  }
+  type Mutation {
+    increment: Int
+    decrement: Int
   }
 `;
 
 // A map of functions which return data for the schema.
 const resolvers = {
   Query: {
-    hello: () => "THIS IS DATA FROM GRAPHQL!!!"
+    num: () => state.num
+  },
+  Mutation: {
+    increment: () => ++state.num,
+    decrement: () => --state.num
   }
 };
 
 const server = new ApolloServer({
   typeDefs,
-  resolvers
+  resolvers,
+  introspection: true,
+  playground: true
 });
 
-server.listen().then(({ url }) => {
-  console.log(`🚀 Server ready at ${url}`);
-});
+module.exports = server;
