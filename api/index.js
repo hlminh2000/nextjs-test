@@ -22,6 +22,6 @@ const server = new ApolloServer({
   resolvers
 });
 
-server.applyMiddleware({ app: router });
-
-module.exports = router;
+server.listen().then(({ url }) => {
+  console.log(`🚀 Server ready at ${url}`);
+});
