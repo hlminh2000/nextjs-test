@@ -3,7 +3,7 @@
   "scripts": {
     "dev": "nodemon index.js",
     "build": "next build",
-    "start": "NODE_ENV=production node index.js"
+    "start": "NODE_ENV=production npm run build && node index.js"
   },
   "dependencies": {
     "@emotion/core": "^10.0.7",
