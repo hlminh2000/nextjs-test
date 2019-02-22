@@ -1,10 +1,25 @@
-const http = require("http");
+const express = require("express");
+const next = require("next");
+const api = require("./api");
 
-const server = http.createServer((req, res) => {
-  res.writeHeader(200, { "Content-Type": "text/html" });
-  res.end(
-    'This is a Node.js server running on Now 2.0 <hr> <a href="/about">Navigate to About Page</a>'
-  );
+const port = parseInt(process.env.PORT, 10) || 3000;
+const dev = process.env.NODE_ENV !== "production";
+const app = next({
+  dev
 });
+const handle = app.getRequestHandler();
 
-server.listen();
+app.prepare().then(() => {
+  const server = express();
+
+  server.use("/api", api);
+
+  server.get("*", (req, res) => {
+    return handle(req, res);
+  });
+
+  server.listen(port, err => {
+    if (err) throw err;
+    console.log(`> Ready on http://localhost:${port}`);
+  });
+});
