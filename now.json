@@ -2,12 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "next.config.js",
-      "use": "@now/next"
-    },
+      "src": "index.js",
+      "use": "@now/node-server"
+    }
+  ],
+  "routes": [
     {
-      "src": "api/index.js",
-      "use": "@now/node"
+      "src": "/.*",
+      "dest": "index.js"
     }
   ]
 }

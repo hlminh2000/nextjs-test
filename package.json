@@ -1,9 +1,9 @@
 {
   "name": "create-next-example-app",
   "scripts": {
-    "dev": "nodemon index.js",
+    "dev": "next index.js",
     "build": "next build",
-    "start": "next start"
+    "start": "NODE_ENV=production node index.js"
   },
   "dependencies": {
     "apollo-server-express": "^2.4.5",
