@@ -5,7 +5,6 @@ import gql from "graphql-tag";
 import { useServerNum } from "./hooks";
 import Head from "../../client/components/head";
 import Nav from "../../client/components/nav";
-import { runQuery } from "../../client/services.js";
 
 const Container = styled("div")`
   .hero {
@@ -55,14 +54,14 @@ const Container = styled("div")`
 `;
 
 const Home = (() => {
-  const component = ({ initialNum = 0 }) => {
+  const component = ({ initialNum = 0, firstName }) => {
     const { num, increment, decrement, loading } = useServerNum(initialNum);
     return (
       <Container>
         <Head title="Home" />
         <Nav />
         <div className="hero">
-          <h1 className="title">Welcome to Next! {loading ? "..." : num}</h1>
+          <h1 className="title">Welcome to Next, {firstName}!!!</h1>
           <p className="description">
             To get started, edit <code>pages/index.js</code> and save to reload.
           </p>
@@ -77,16 +76,18 @@ const Home = (() => {
       </Container>
     );
   };
-  component.getInitialProps = ({ req }) => {
-    console.log("req: ", req);
-    return runQuery({
+  component.getInitialProps = ({ req: { runGql } }) => {
+    return runGql({
       query: gql`
         {
           num
+          self {
+            firstName
+          }
         }
       `
-    }).then(({ data: { num } }) => {
-      return { initialNum: num };
+    }).then(({ data: { num, self: { firstName } } }) => {
+      return { initialNum: num, firstName };
     });
   };
   return component;

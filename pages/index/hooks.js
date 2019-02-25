@@ -7,25 +7,27 @@ export const useServerNum = initial => {
   const [loading, setLoading] = useState(false);
   const increment = async () => {
     setLoading(true);
-    await runMutation({
+    runMutation({
       mutation: gql`
         mutation {
           increment
         }
       `
-    }).then(({ data: { increment } }) => setNum(increment));
-    setLoading(false);
+    })
+      .then(({ data: { increment } }) => setNum(increment))
+      .then(() => setLoading(false));
   };
   const decrement = async () => {
     setLoading(true);
-    await runMutation({
+    runMutation({
       mutation: gql`
         mutation {
           decrement
         }
       `
-    }).then(({ data: { decrement } }) => setNum(decrement));
-    setLoading(false);
+    })
+      .then(({ data: { decrement } }) => setNum(decrement))
+      .then(() => setLoading(false));
   };
   return {
     num,
